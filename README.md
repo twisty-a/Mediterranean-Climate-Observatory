@@ -4,8 +4,8 @@
 
 # Mediterranean Sea Climate Observatory
 
-**Live Demo:** [https://twisty-a.github.io/mediterranean-climate-observatory/](https://twisty-a.github.io/mediterranean-climate-observatory/)  
-**Presentation Deck:** [https://twisty-a.github.io/mediterranean-climate-observatory/presentation.html](https://twisty-a.github.io/mediterranean-climate-observatory/presentation.html)  
+**Live Demo:** [https://twisty-a.github.io/Mediterranean-Climate-Observatory/](https://twisty-a.github.io/Mediterranean-Climate-Observatory/)  
+**Presentation Deck:** [https://twisty-a.github.io/Mediterranean-Climate-Observatory/presentation.html](https://twisty-a.github.io/Mediterranean-Climate-Observatory/presentation.html)  
 **Challenge:** NASA Space Apps — *Be An Earth System Trend Detective*  
 **Team Solari-X:** Ahmed Madeh, Amr Reffat, Maya Ahmed, and Ahmed Aladdin
 
@@ -100,7 +100,7 @@ Because the dataset is bundled in `js/data.js` and all statistical routines exec
   python -m http.server 8000
   # or using VS Code Live Server / any static host
   ```
-- **Deployment:** Live on GitHub Pages from the `main` branch root (`/`) at `https://twisty-a.github.io/mediterranean-climate-observatory/`.
+- **Deployment:** Live on GitHub Pages from the `main` branch root (`/`) at `https://twisty-a.github.io/Mediterranean-Climate-Observatory/`.
 
 ---
 
