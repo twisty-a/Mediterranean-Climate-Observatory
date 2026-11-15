@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Mediterranean Sea Climate Observatory by Team Solari-X — interactive Earth System Trend Detective using NASA GPM IMERG v07, Copernicus Marine, and KNMI Climate Explorer records (1870–2025).">
+  <title>Mediterranean Sea Climate Observatory · Solari-X | Earth System Trend Detective</title>
+  <link rel="icon" href="assets/solari-x-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <header class="mast">
+    <div class="wrap">
+      <div class="mast-in">
+        <div class="brand">
+          <img class="brand-mark" src="assets/solari-x-icon.svg" width="40" height="40" alt="Solari-X emblem">
+          <div>
+            <h1>Mediterranean Sea Climate Observatory</h1>
+            <p>Earth System Trend Detective · NASA GES DISC · Copernicus Marine · KNMI Climate Explorer</p>
+          </div>
+        </div>
+        <div class="mast-actions">
+          <div class="mast-badges">
+            <span class="badge badge-team"><b>SOLARI-X</b> NASA Space Apps</span>
+            <span class="badge"><b>SDG 14</b> Life Below Water</span>
+            <span class="badge"><b>NASA</b> GPM IMERG v07</span>
+          </div>
+          <a class="deck-link" href="presentation.html" title="Open the Solari-X hackathon presentation deck">Presentation Deck</a>
+          <button class="theme-btn" id="theme-toggle" type="button" aria-label="Toggle color theme">Light mode</button>
+        </div>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="Dashboard sections" id="tabs"></nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="hero" id="hero" aria-labelledby="hero-h">
+      <svg class="sunart" viewBox="0 0 420 420" aria-hidden="true">
+        <defs>
+          <linearGradient id="sxOrbit" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2b86d9"/>
+            <stop offset="50%" stop-color="#3ec6b8"/>
+            <stop offset="100%" stop-color="#64ce99"/>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke="url(#sxOrbit)">
+          <circle cx="260" cy="160" r="44" fill="url(#sxOrbit)" fill-opacity=".22" stroke-opacity=".85" stroke-width="1.5"/>
+          <path d="M238 138 L282 182 M282 138 L238 182" stroke="url(#sxOrbit)" stroke-width="4.5" stroke-linecap="round" stroke-opacity=".85"/>
+          <circle cx="260" cy="160" r="76" stroke-opacity=".5"/>
+          <circle cx="260" cy="160" r="110" stroke-opacity=".3" stroke-dasharray="4 6"/>
+          <circle cx="260" cy="160" r="148" stroke-opacity=".2"/>
+          <circle cx="260" cy="160" r="190" stroke-opacity=".12" stroke-dasharray="2 8"/>
+        </g>
+        <g stroke="var(--s-sla)" stroke-width="1.2" fill="none" stroke-opacity=".42">
+          <path d="M0 250 H420"/><path d="M0 274 H420" stroke-opacity=".32"/><path d="M0 300 H420" stroke-opacity=".22"/><path d="M0 330 H420" stroke-opacity=".14"/>
+        </g>
+      </svg>
+      <div class="hero-in">
+        <div>
+          <p class="eyebrow">NASA Space Apps · Be An Earth System Trend Detective · Team Solari-X</p>
+          <h2 id="hero-h" style="margin-top:10px">Is the Mediterranean <em>changing</em>?</h2>
+          <p class="lede">Nine long records of sea temperature, sea level, ocean color and rain at three Mediterranean coastal points, all from public NASA, Copernicus and KNMI data. Pick a variable and a period, then test whether its trend is statistically real.</p>
+          <div class="hero-meta-strip">
+            <span>1870–2025 Span</span>
+            <span>9 Earth System Records</span>
+            <span>4-Test Statistical Engine</span>
+            <span>NASA / Copernicus / KNMI</span>
+          </div>
+          <div class="hero-cta">
+            <button class="btn primary" data-go="detective">Start investigating</button>
+            <button class="btn" data-go="rain">Compare three rain points</button>
+            <button class="btn" data-go="variables">What do the variables mean?</button>
+          </div>
+        </div>
+        <div class="kpis" id="kpis" aria-label="Headline trends"></div>
+      </div>
+    </section>
+
+    <main>
+      <!-- ================= OVERVIEW ================= -->
+      <section role="tabpanel" id="panel-overview" aria-labelledby="tab-overview" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Four records on one scale</h3>
+              <p>Each record is converted to a z-score: how many standard deviations a year sits above or below that record's own average. This puts degrees, millimeters, chlorophyll and rain on the same axis for comparing shape, not size.</p>
+            </div>
+            <div class="chips" id="zchips" role="group" aria-label="Show or hide series"></div>
+          </div>
+          <div id="plot-z" class="chart" style="min-height:420px"></div>
+          <p class="note" style="margin-top:12px">Records cover different years: SST 1982–2025, sea level 1993–2021, chlorophyll 1998–2024, rain 2001–2024. A shared upward slope does not mean one record causes another.</p>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-h"><h3>What the records show</h3></div>
+            <ul class="list" id="findings"></ul>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>Read with care</h3></div>
+            <ul class="list">
+              <li><span><b>Different places.</b> Each rain record is one 0.1° land cell: Alexandria, Athens or Barcelona. The other records are basin-wide sea averages. Rain at a single point cannot explain basin chlorophyll.</span></li>
+              <li><span><b>Different footprints.</b> KNMI averages use a bounding box (30.2–46.0°N, 6°W–36.3°E) that includes some neighboring waters. Copernicus uses an area-weighted Mediterranean sea mask.</span></li>
+              <li><span><b>A proxy, not a headcount.</b> Chlorophyll-a is an optical measure of phytoplankton pigment. It is not fish abundance or biodiversity.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DATA DETECTIVE ================= -->
+      <section role="tabpanel" id="panel-detective" aria-labelledby="tab-detective" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Case files</h3>
+              <p>Start from a question, or set up your own investigation below. Use “Watch the trend appear” to see how a longer record changes the verdict.</p>
+            </div>
+          </div>
+          <div class="cases" id="cases"></div>
+        </div>
+
+        <div class="det">
+          <div class="stack det-sticky">
+            <div class="panel ctrl">
+              <div>
+                <div class="step-h"><span class="step-n">1</span><h4>Choose a place</h4></div>
+                <div class="seg" id="place-seg" role="group" aria-label="Place"></div>
+              </div>
+              <div>
+                <div class="step-h"><span class="step-n">2</span><h4>Choose a variable</h4></div>
+                <div class="varlist" id="varlist" role="group" aria-label="Variable"></div>
+              </div>
+              <div>
+                <div class="step-h"><span class="step-n">3</span><h4>Choose a period</h4></div>
+                <div class="range">
+                  <label for="r-start">Start year <output id="o-start" class="num"></output></label>
+                  <input type="range" id="r-start">
+                  <label for="r-end">End year <output id="o-end" class="num"></output></label>
+                  <input type="range" id="r-end">
+                  <div class="muted num" id="span-note" style="font-size:12px"></div>
+                </div>
+                <div class="row-btns" style="margin-top:12px">
+                  <button class="btn sm" id="btn-full">Use full record</button>
+                  <button class="btn sm primary" id="btn-demo">Watch the trend appear</button>
+                </div>
+              </div>
+            </div>
+            <div class="note">Shorter windows give wider uncertainty. A trend that is not yet significant can become significant when the record gets longer.</div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="def" id="about"></div>
+              <div class="panel-h" style="margin:18px 0 8px">
+                <div><div class="step-h" style="margin:0"><span class="step-n">4</span><h4>Time series and trend</h4></div></div>
+                <div class="toggles">
+                  <button class="chip" id="t-band" aria-pressed="true">95% band</button>
+                  <button class="chip" id="t-sen" aria-pressed="false">Theil–Sen line</button>
+                  <button class="chip" id="t-cp" aria-pressed="false">Two-slope fit</button>
+                </div>
+              </div>
+              <div id="plot-det" class="chart" style="min-height:400px"></div>
+            </div>
+
+            <div class="panel">
+              <div class="step-h"><span class="step-n">5</span><h4>Test the trend</h4></div>
+              <div class="verdict" id="verdict" style="margin-bottom:14px"></div>
+              <div class="readouts" id="readouts"></div>
+              <p class="note" id="pub-note" style="margin-top:14px"></p>
+              <details class="tbl" style="margin-top:16px">
+                <summary>Data table for the selected period</summary>
+                <div class="row-btns" style="margin-top:10px">
+                  <button class="btn sm" id="btn-copy">Copy as CSV</button>
+                  <button class="btn sm" id="btn-download">Download CSV</button>
+                  <span class="muted" id="copy-msg" style="align-self:center;font-size:12px"></span>
+                </div>
+                <div class="tbl-scroll"><table><thead><tr><th>Year</th><th>Value</th><th>Trend line</th><th>Residual</th></tr></thead><tbody id="det-rows"></tbody></table></div>
+              </details>
+            </div>
+            <div class="panel">
+              <div class="step-h"><span class="step-n">6</span><h4>Advanced detection</h4></div>
+              <p class="muted" style="max-width:78ch;margin-bottom:14px">Climate records have memory, abrupt shifts and changing speed. These checks ask whether the straight-line story holds up.</p>
+              <div id="evidence" class="scroll" style="margin-bottom:16px"></div>
+              <div class="readouts" id="adv-cells"></div>
+              <div class="panel-h" style="margin:22px 0 8px">
+                <div><h3 style="font-size:18px">Is the trend steady?</h3><p id="roll-sub">Slope of a sliding window, with its 95% interval. A steady trend stays on one side of zero.</p></div>
+                <div class="chips" id="win-chips" role="group" aria-label="Window length"></div>
+              </div>
+              <div id="plot-roll" class="chart sm"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= RAIN COMPARE ================= -->
+      <section role="tabpanel" id="panel-rain" aria-labelledby="tab-rain" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Annual rain at three Mediterranean points</h3>
+              <p>NASA GPM IMERG Final, 2001–2024, complete years only. Each series is one 0.1° grid cell, summed from half-hourly rates. Dashed lines are least-squares trends.</p>
+            </div>
+            <div class="chips" id="rchips" role="group" aria-label="Show or hide stations"></div>
+          </div>
+          <div id="plot-rain-all" class="chart" style="min-height:400px"></div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-h"><div><h3>Do the trends differ?</h3><p>Change per decade as a share of each point's own average, with the 95% HAC interval. Intervals that cross zero are not significant.</p></div></div>
+            <div id="plot-forest" class="chart sm"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><div><h3>Do the points move together?</h3><p>Correlation of yearly totals, 2001–2024. Values near 0 mean one place's wet year says little about another's.</p></div></div>
+            <div id="corr" class="list" style="gap:12px"></div>
+            <p class="note" id="corr-note" style="margin-top:16px"></p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-h"><div><h3>Trend results by point</h3><p>HAC slope with two-sided p, and the Benjamini–Hochberg q across these three tests (one question asked three times).</p></div></div>
+          <div class="scroll"><table><thead><tr><th>Point</th><th>Verdict</th><th>Average per year</th><th>Slope per decade</th><th>95% CI (HAC)</th><th>HAC p</th><th>BH q (3 points)</th><th>Theil–Sen</th><th>Mann–Kendall τ (p)</th></tr></thead><tbody id="rain-body"></tbody></table></div>
+          <p class="note" style="margin-top:14px" id="rain-note"></p>
+        </div>
+        <div class="panel">
+          <div class="panel-h"><div><h3>Rain profile of each point</h3><p>Totals and extremes from the same complete years.</p></div></div>
+          <div class="scroll"><table><thead><tr><th>Point</th><th>Grid cell</th><th>Wettest year</th><th>Driest year</th><th>Year-to-year spread</th><th>Peak half-hour rate</th><th>Wettest month</th><th>Driest month</th></tr></thead><tbody id="prof-body"></tbody></table></div>
+        </div>
+      </section>
+
+      <!-- ================= VARIABLES ================= -->
+      <section role="tabpanel" id="panel-variables" aria-labelledby="tab-variables" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Variable guide</h3>
+              <p>Plain-language definitions for every record in this dashboard. Each one is an annual value, so a trend is the change in that yearly number across decades.</p>
+            </div>
+          </div>
+          <div class="grid3" id="vguide"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-h"><h3>How a trend is judged</h3><p>The same three questions apply to every variable.</p></div>
+          <div class="grid3">
+            <div class="def"><span class="tag">Rate</span><h4>How fast is it changing?</h4><p>The slope of a straight line fitted through the yearly values, reported per decade so records can be compared.</p></div>
+            <div class="def"><span class="tag">Uncertainty</span><h4>How sure are we?</h4><p>A 95% confidence interval gives the range of slopes consistent with the data. If it includes zero, a flat line is still plausible.</p></div>
+            <div class="def"><span class="tag">Significance</span><h4>Could it be chance?</h4><p>A p-value below 0.05 means a trend this strong would be unusual if there were really no trend. Two tests are used so one assumption cannot mislead.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SEASONS ================= -->
+      <section role="tabpanel" id="panel-seasons" aria-labelledby="tab-seasons" hidden>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-h"><div><h3>Chlorophyll-a through the year</h3><p>Monthly basin mean, 1997–2024, with one standard deviation between years.</p></div></div>
+            <div id="plot-chl-season" class="chart sm"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><div><h3>Rain through the year</h3><p>Average rainfall depth per month at each point, 2001–2024.</p></div></div>
+            <div id="plot-rain-season" class="chart sm"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <div class="panel-h"><div><h3>Strongest half-hour rain rate</h3><p>Highest rate seen in each calendar month over 24 years, in millimeters per hour.</p></div></div>
+            <div id="plot-rain-rate" class="chart sm"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-h"><h3>Reading the seasons</h3></div>
+            <ul class="list">
+              <li><span><b>Winter bloom.</b> Deep winter mixing lifts nutrients into sunlit water. Basin chlorophyll peaks in February at about 0.12 mg m⁻³.</span></li>
+              <li><span><b>Summer desert.</b> Strong heating layers the surface and cuts off nutrients. Chlorophyll bottoms out near 0.043 mg m⁻³ in August.</span></li>
+              <li><span><b>Three rain calendars.</b> Alexandria and Athens are wet in winter and nearly dry in summer: Athens averages 95 mm in December and 8 mm in July. Barcelona has no dry winter. Its wettest month is October (86 mm), with a second peak in April.</span></li>
+              <li><span><b>Storms dominate.</b> The highest half-hour rates in the three records are 34.3 mm/h at Barcelona (2019), 28.6 mm/h at Athens (2019) and 27.9 mm/h at Alexandria (2015). Alexandria's wettest years, 2015 (309 mm) and 2020 (406 mm), came from a few heavy events.</span></li>
+            </ul>
+            <p class="note" style="margin-top:16px">Rain depth for each half hour is the rate multiplied by 0.5 hours. Legend swatches show which point each series belongs to.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MAP ================= -->
+      <section role="tabpanel" id="panel-map" aria-labelledby="tab-map" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Where the data come from</h3>
+              <p>The sea records are averages over large areas. Each rain record is a single 0.1° grid cell on land.</p>
+            </div>
+            <div class="chips" aria-hidden="true">
+              <span class="chip legend-chip"><span class="swatch" style="background:var(--s-sla);height:0;border-top:2px dashed var(--s-sla)"></span>KNMI box</span>
+              <span class="chip legend-chip"><span class="swatch" style="background:var(--s-chl)"></span>Copernicus extent</span>
+              <span class="chip legend-chip"><span class="swatch" style="background:var(--s-rain);width:10px;height:10px;border-radius:50%"></span>Alexandria</span>
+              <span class="chip legend-chip"><span class="swatch" style="background:var(--s-ath);width:10px;height:10px;border-radius:50%"></span>Athens</span>
+              <span class="chip legend-chip"><span class="swatch" style="background:var(--s-bcn);width:10px;height:10px;border-radius:50%"></span>Barcelona</span>
+            </div>
+          </div>
+          <div class="mapbox" id="mapbox"></div>
+          <div class="grid3" style="margin-top:16px">
+            <div class="def"><span class="tag" style="color:var(--s-sla)">KNMI Climate Explorer</span><h4>30.19–45.98°N, 6.00°W–36.29°E</h4><p>Approximate rectangle snapped to each product's grid. It includes parts of neighboring waters such as the Gulf of Cadiz and the Black Sea.</p></div>
+            <div class="def"><span class="tag" style="color:var(--s-chl)">Copernicus Marine</span><h4>30–46°N, 6°W–36.5°E</h4><p>Area-weighted mean over Mediterranean sea pixels only. The product cannot split east and west sub-basins.</p></div>
+            <div class="def"><span class="tag" style="color:var(--s-rain)">NASA GPM · Alexandria</span><h4>31.25°N, 29.95°E</h4><p>Requested at 31.2001°N, 29.9187°E and snapped to the nearest 0.1° cell. Water cells are masked, so this is a land-side rain record.</p></div>
+            <div class="def"><span class="tag" style="color:var(--s-ath)">NASA GPM · Athens</span><h4>38.05°N, 23.65°E</h4><p>Requested at 38.0°N, 23.7°E. Eastern Mediterranean, in the rain shadow of the Pindus mountains.</p></div>
+            <div class="def"><span class="tag" style="color:var(--s-bcn)">NASA GPM · Barcelona</span><h4>41.45°N, 2.15°E</h4><p>Requested at 41.4°N, 2.2°E. Western Mediterranean, backed by the Catalan coastal ranges.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= STATISTICS ================= -->
+      <section role="tabpanel" id="panel-statistics" aria-labelledby="tab-statistics" hidden>
+        <div class="panel">
+          <div class="panel-h">
+            <div>
+              <h3>Published trend results</h3>
+              <p>Full-period results for each record. The slope uses ordinary least squares with Newey–West (HAC) standard errors, which allow for year-to-year memory in the data. Theil–Sen and Mann–Kendall need no straight-line or normality assumption.</p>
+            </div>
+          </div>
+          <div class="scroll"><table id="stat-table"><thead><tr>
+            <th>Variable</th><th>Verdict</th><th>Period (years)</th><th>Slope per decade</th><th>95% CI (HAC)</th><th>HAC p</th><th>Theil–Sen</th><th>Mann–Kendall τ (p)</th><th>BH q</th>
+          </tr></thead><tbody id="stat-body"></tbody></table></div>
+          <p class="note" style="margin-top:14px">Verdict: <b>Tests agree</b> means HAC q &lt; 0.05 and Mann–Kendall p &lt; 0.05. <b>Mixed evidence</b> means only one passes. <b>Not significant</b> means neither does. The q for Athens and Barcelona is adjusted across the three NASA rain points. Alexandria's published q (0.037) was adjusted alongside chlorophyll only; adjusted across the three rain points it is 0.11.</p>
+        </div>
+        <div class="panel">
+          <div class="panel-h"><h3>Glossary of tests</h3></div>
+          <div class="grid3">
+            <div class="def"><span class="tag">t-test on the slope</span><h4>Is the slope different from zero?</h4><p>Divides the slope by its standard error. A large t gives a small p-value. It assumes each year is independent and errors are roughly normal.</p></div>
+            <div class="def"><span class="tag">Mann–Kendall</span><h4>Do values tend to rise or fall?</h4><p>Compares every pair of years and counts how often the later one is higher. τ runs from −1 (always falling) to +1 (always rising).</p></div>
+            <div class="def"><span class="tag">Theil–Sen slope</span><h4>A slope outliers cannot bend</h4><p>The median of the slopes between all pairs of years. One extreme storm year moves it far less than it moves a least-squares line.</p></div>
+            <div class="def"><span class="tag">95% confidence interval</span><h4>Range of plausible slopes</h4><p>If you repeated the study many times, 95% of such intervals would contain the true slope. An interval that excludes zero signals a significant trend.</p></div>
+            <div class="def"><span class="tag">Newey–West (HAC)</span><h4>Corrects for memory</h4><p>Warm years tend to follow warm years. Ignoring this makes p-values too small. HAC widens the standard error to compensate.</p></div>
+            <div class="def"><span class="tag">Hamed–Rao correction</span><h4>Mann–Kendall with memory</h4><p>Inflates or shrinks the Mann–Kendall variance according to the autocorrelation left after removing the trend. It stops persistent records from looking more significant than they are.</p></div>
+            <div class="def"><span class="tag">Pettitt and two-slope fit</span><h4>Step or bend?</h4><p>Pettitt finds the year where the level most likely jumped. The two-slope fit finds the year where the rate changes. Both pick the year from the data, so their p-values are approximate.</p></div>
+            <div class="def"><span class="tag">Curvature and rolling slopes</span><h4>Is the rate itself changing?</h4><p>A quadratic term tests for acceleration. Sliding-window slopes show whether every stretch of the record points the same way.</p></div>
+            <div class="def"><span class="tag">Benjamini–Hochberg q</span><h4>Guards against lucky results</h4><p>Testing many variables makes some pass by luck. The q-value adjusts p so that no more than 5% of reported discoveries are expected to be false.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= GUARDRAILS ================= -->
+      <section role="tabpanel" id="panel-guardrails" aria-labelledby="tab-guardrails" hidden>
+        <div class="panel">
+          <div class="panel-h"><div><h3>Scientific guardrails</h3><p>Limits to keep in mind before quoting a number from this dashboard.</p></div></div>
+          <div class="grid2">
+            <div class="def"><span class="tag">Spatial mismatch</span><h4>A sea average is not a coastal point</h4><p>The Copernicus series averages hundreds of thousands of square kilometers of open sea. Each NASA series is one 0.1° land cell, roughly 10 km across. More rain at one cell does not show that runoff changed basin phytoplankton. Linking them would need watershed modeling.</p></div>
+            <div class="def"><span class="tag">Three points</span><h4>Not a regional average</h4><p>Alexandria, Athens and Barcelona sample three weather regimes. Their yearly totals are nearly uncorrelated, so a trend at one point cannot be extended to the whole Mediterranean.</p></div>
+            <div class="def"><span class="tag">Multiple comparisons</span><h4>Asking three times changes the odds</h4><p>Alexandria's rain trend has HAC p = 0.037 alone. Adjusted across all three points with Benjamini–Hochberg, q = 0.11, so it no longer clears the 5% false-discovery threshold.</p></div>
+            <div class="def"><span class="tag">Boxes and masks</span><h4>Two ways to draw the Mediterranean</h4><p>KNMI averages use a bounding rectangle that clips in some neighboring waters. Copernicus applies a strict sea mask. Their numbers describe slightly different areas.</p></div>
+            <div class="def"><span class="tag">Proxy</span><h4>Color is not biodiversity</h4><p>Chlorophyll-a is an optical signal from surface phytoplankton pigment. It is not a count of fish, habitat health or species richness. A decline needs in-situ checks before it guides fisheries decisions.</p></div>
+            <div class="def"><span class="tag">Land forcing</span><h4>Rain on land is not rain at sea</h4><p>The NASA product masks water cells, so these records are atmospheric forcing over land. Drainage, infiltration and diversion happen before any water reaches the coast.</p></div>
+            <div class="def"><span class="tag">Short records</span><h4>Few years, wide uncertainty</h4><p>Chlorophyll has 27 years and rain 24. Pick another start or end year and the slope can change sign. Check the interval, not only the slope.</p></div>
+            <div class="def"><span class="tag">Test choice</span><h4>Significant depends on the test</h4><p>Alexandria rain passes the HAC test (p = 0.037) but not Mann–Kendall (p = 0.107), and its Theil–Sen interval includes zero. Treat it as suggestive, driven by a few storm years.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="team-card">
+        <img class="team-logo-img" src="assets/solari-x-logo.jpg" alt="Team Solari-X logo">
+        <div class="team-info">
+          <span class="eyebrow">NASA Space Apps Challenge · earthdetective.earth</span>
+          <h4>Team Solari-X — Mediterranean Sea Climate Observatory</h4>
+          <p>Built for the <b>Be An Earth System Trend Detective</b> challenge to help students, researchers, and coastal planners separate real climate signals from short-term noise.</p>
+          <div class="team-members">
+            <span class="member-pill">Ahmed Madeh</span>
+            <span class="member-pill">Amr Reffat</span>
+            <span class="member-pill">Maya Ahmed</span>
+            <span class="member-pill">Ahmed Aladdin</span>
+          </div>
+        </div>
+      </div>
+      <div class="links">
+        <a href="https://disc.gsfc.nasa.gov/" target="_blank" rel="noopener">NASA GES DISC</a>
+        <a href="https://marine.copernicus.eu/" target="_blank" rel="noopener">Copernicus Marine</a>
+        <a href="https://climexp.knmi.nl/" target="_blank" rel="noopener">KNMI Climate Explorer</a>
+        <a href="presentation.html">Presentation Deck</a>
+      </div>
+      <p>Data: GPM IMERG Final L3 (GPM_3IMERGHH.07) at Alexandria, Athens and Barcelona for rain; Copernicus product OMI_HEALTH_CHL_MEDSEA_OCEANCOLOUR_area_averaged_mean for chlorophyll; NOAA OI v2, HadISST1, Copernicus altimetry and UKMO EN4 via KNMI Climate Explorer.</p>
+      <p>Statistics: every window in Data Detective is scored live across OLS Student's t-test, Newey–West HAC standard errors, Mann–Kendall rank test (plus Hamed–Rao memory correction), Theil–Sen slope, Pettitt change-point, continuous two-slope hinge fit, quadratic acceleration, and rolling-window slope stability.</p>
+    </footer>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
