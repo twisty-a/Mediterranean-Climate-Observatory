@@ -2,7 +2,7 @@
   <img src="assets/solari-x-logo.jpg" alt="Team Solari-X Logo" width="220">
 </p>
 
-# Mediterranean Sea Climate Observatory: Earth System Trend Detective
+# Mediterranean Sea Climate Observatory
 
 **Live domain:** `earthdetective.earth`  
 **Challenge:** NASA Space Apps — *Be An Earth System Trend Detective*  
@@ -20,7 +20,7 @@ We built the **Mediterranean Sea Climate Observatory** so students, coastal plan
 
 ## What is inside the platform
 
-The app runs completely in the browser with no backend server or build step. It is organized into eight workspaces (`index.html`), plus an interactive 8-slide hackathon presentation (`presentation.html`):
+The app runs completely in the browser with no backend server or build step. It is organized into eight workspaces (`index.html`), paired with our 6-slide presentation (`presentation.html` and original team deck `presentation.pdf`):
 
 1. **Overview** — Converts four headline series (Sea Surface Temperature, Sea Level Anomaly, Chlorophyll-a, and Alexandria Rain) into dimensionless z-scores so users can compare trend shapes across different physical units on one timeline.
 2. **Data Detective** — A 6-step guided workbench with dual year-range sliders, case-file presets, live OLS confidence bands, Theil–Sen overlays, two-slope hinge fits, CSV copy/export, and the **"Watch the trend appear"** animation that grows a time window year by year.
@@ -68,7 +68,8 @@ Every time you move a slider in **Data Detective**, the browser runs two self-co
 ```text
 .
 ├── index.html               # Main 8-workspace observatory application
-├── presentation.html        # Interactive 8-slide NASA Space Apps pitch deck
+├── presentation.html        # Interactive 6-slide presentation synced with presentation.pdf + PDF viewer
+├── presentation.pdf         # Original 6-slide team PDF presentation (as-is)
 ├── CNAME                    # Custom domain config (earthdetective.earth)
 ├── LICENSE                  # MIT License
 ├── README.md                # Project documentation

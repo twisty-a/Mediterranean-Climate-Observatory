@@ -1,25 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Presentation Deck — Solari-X | Mediterranean Sea Climate Observatory</title>
+  <title>Mediterranean Sea Climate Observatory — Presentation</title>
   <link rel="icon" href="assets/solari-x-icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
   <style>
-    body { padding-block: 0; overflow-x: hidden; }
+    :root {
+      --shell-bg: #0b1024;
+      --shell-panel: #111833;
+      --shell-line: #27315a;
+      --navy: #131836;
+      --navy-deep: #0f1430;
+      --cream: #faf6ef;
+      --sand: #f2ede2;
+      --ink: #191c2b;
+      --ink-2: #474c63;
+      --ink-3: #6a708a;
+      --card-line: #e6dfd3;
+      --amber: #f0a830;
+      --blue-bg: #e6eef8;
+      --blue-fg: #2b73cf;
+      --amber-bg: #faefd9;
+      --amber-fg: #eb981e;
+      --green-bg: #e3f5ec;
+      --green-fg: #1d9a6c;
+      --font-display: "Barlow Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+      --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: var(--shell-bg);
+      color: #f1eee6;
+      font-family: var(--font-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
     .deck-shell {
       min-height: 100vh;
+      max-width: 1240px;
+      margin-inline: auto;
+      padding: 14px clamp(14px, 3vw, 28px) 20px;
       display: grid;
       grid-template-rows: auto 1fr auto;
-      max-width: 1200px;
-      margin-inline: auto;
-      padding-block: 14px 20px;
-      gap: 16px;
+      gap: 14px;
     }
+
     .deck-top {
       display: flex;
       align-items: center;
@@ -27,76 +61,402 @@
       gap: 12px;
       flex-wrap: wrap;
       padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--shell-line);
     }
-    .deck-brand { display: flex; align-items: center; gap: 10px; }
-    .deck-brand span { font: 600 14px/1 var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg); }
-    .deck-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .slide-stage {
-      display: grid;
-      align-items: stretch;
-    }
-    .slide {
-      display: none;
-      background:
-        radial-gradient(560px 360px at 92% -10%, var(--glow), transparent 70%),
-        linear-gradient(180deg, var(--panel-2), var(--panel));
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: clamp(24px, 4vw, 48px);
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .slide::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto;
-      height: 3px;
-      background: var(--brand-grad);
-    }
-    .slide.active { display: flex; }
-    .slide h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.06; margin-top: 8px; }
-    .slide h2 em {
-      font-style: normal;
-      background: var(--brand-grad);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .slide-lead { font-size: 16px; color: var(--fg-2); max-width: 68ch; margin-top: 10px; }
-    .slide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-    .slide-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .card-box {
-      background: color-mix(in srgb, var(--bg) 55%, transparent);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 18px;
-      display: grid;
-      gap: 8px;
-      align-content: start;
-    }
-    .card-box h4 { font-size: 18px; color: var(--fg); }
-    .card-box p { font-size: 13.5px; color: var(--fg-2); }
-    .stat-big { font: 700 clamp(26px, 3vw, 36px)/1 var(--font-display); color: var(--sun); }
-    .hero-cover {
-      display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 28px;
+
+    .deck-brand {
+      display: flex;
       align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
     }
-    .cover-logo {
+
+    .deck-brand img {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      display: block;
+    }
+
+    .deck-brand span {
+      font: 600 15px/1.1 var(--font-display);
+      letter-spacing: 0.04em;
+      color: #f1eee6;
+    }
+
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 7px;
+      border: 1px solid var(--shell-line);
+      background: var(--shell-panel);
+      color: #f1eee6;
+      font: 500 12.5px/1 var(--font-body);
+      text-decoration: none;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .btn:hover { border-color: #4f5f9e; background: #19234a; }
+    .btn.primary { background: var(--amber); color: #191300; border-color: var(--amber); font-weight: 600; }
+    .btn.primary:hover { background: #f6b64c; border-color: #f6b64c; }
+    .btn[aria-pressed="true"] { background: #223063; border-color: var(--amber); color: var(--amber); }
+
+    .counter {
+      font: 500 12px/1 var(--font-mono);
+      color: #9da6c7;
+      padding-inline: 6px;
+    }
+
+    .stage-wrap {
       display: grid;
       place-items: center;
-      background: #0b1936;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 20px;
+      min-height: 0;
     }
-    .cover-logo img { max-width: 260px; border-radius: 6px; }
+
+    .slide-stage {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      min-height: 520px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--shell-line);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      position: relative;
+      background: var(--cream);
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      padding: clamp(28px, 4.5vw, 58px) clamp(28px, 5vw, 68px);
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.active { display: flex; }
+
+    /* Dark navy cover & closing slides matching presentation.pdf */
+    .slide-dark {
+      background:
+        radial-gradient(540px 380px at 84% 22%, rgba(235, 130, 52, 0.18), transparent 72%),
+        linear-gradient(155deg, #161d40 0%, #111633 55%, #0e1229 100%);
+      color: #f6f7fb;
+    }
+
+    .slide-dark-center {
+      background:
+        radial-gradient(540px 380px at 50% 42%, rgba(235, 130, 52, 0.16), transparent 72%),
+        linear-gradient(160deg, #161d40 0%, #111633 55%, #0e1229 100%);
+      color: #f6f7fb;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    /* Warm cream interior slides matching presentation.pdf */
+    .slide-light {
+      background: var(--cream);
+      color: var(--ink);
+    }
+
+    .eyebrow-amber {
+      font: 700 clamp(12px, 1.1vw, 14px)/1.2 var(--font-display);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .eyebrow-dark {
+      font: 700 clamp(11px, 1vw, 13px)/1.2 var(--font-display);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .cover-title {
+      font: 700 clamp(32px, 4.2vw, 56px)/1.05 var(--font-display);
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      margin-top: 14px;
+    }
+
+    .cover-sub {
+      font-size: clamp(15px, 1.5vw, 20px);
+      line-height: 1.5;
+      color: #c2c8de;
+      max-width: 58ch;
+      margin-top: 22px;
+    }
+
+    .cover-pill-ghost {
+      position: absolute;
+      top: 16%;
+      right: 6.2%;
+      width: 17%;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(114, 136, 200, 0.18);
+      pointer-events: none;
+    }
+
+    .cover-meta {
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .cover-meta span {
+      display: block;
+      font: 400 12px/1.3 var(--font-mono);
+      color: #8f98b8;
+      margin-bottom: 5px;
+    }
+
+    .cover-meta strong {
+      display: block;
+      font: 700 clamp(14px, 1.25vw, 17px)/1.25 var(--font-body);
+      color: #ffffff;
+    }
+
+    .slide-title {
+      font: 700 clamp(26px, 3vw, 38px)/1.1 var(--font-display);
+      color: var(--ink);
+      margin-top: 6px;
+    }
+
+    .rule-bottom {
+      border-top: 1px solid var(--card-line);
+      padding-top: 12px;
+      font: 400 12.5px/1.4 var(--font-body);
+      color: var(--ink-3);
+      min-height: 20px;
+    }
+
+    /* Cards matching PDF aesthetic */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-block: auto;
+    }
+
+    .cards-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card-white {
+      background: #ffffff;
+      border: 1px solid var(--card-line);
+      border-radius: 10px;
+      padding: clamp(18px, 2.2vw, 28px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(25, 28, 43, 0.03);
+    }
+
+    .icon-box {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 4px;
+    }
+
+    .icon-blue { background: var(--blue-bg); color: var(--blue-fg); }
+    .icon-amber { background: var(--amber-bg); color: var(--amber-fg); }
+    .icon-green { background: var(--green-bg); color: var(--green-fg); }
+
+    .card-white h3 {
+      font: 700 clamp(16px, 1.45vw, 20px)/1.25 var(--font-body);
+      color: var(--ink);
+    }
+
+    .card-white p {
+      font-size: clamp(13.5px, 1.15vw, 15.5px);
+      line-height: 1.55;
+      color: var(--ink-2);
+    }
+
+    .num-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .num-badge {
+      font: 700 12px/1 var(--font-mono);
+      color: var(--ink);
+      background: var(--sand);
+      border: 1px solid var(--card-line);
+      border-radius: 5px;
+      padding: 5px 8px;
+      flex: 0 0 auto;
+    }
+
+    .engine-banner {
+      background: var(--sand);
+      border: 1px solid var(--card-line);
+      border-radius: 8px;
+      padding: 13px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .engine-banner code {
+      font: 400 clamp(12px, 1vw, 13.5px)/1.4 var(--font-mono);
+      color: var(--ink-2);
+    }
+
+    .engine-banner strong {
+      font: 700 13.5px/1 var(--font-body);
+      color: var(--ink);
+    }
+
+    .split-4 {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 22px;
+      margin-block: auto;
+      align-items: stretch;
+    }
+
+    .stack-2 {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .card-kicker {
+      font: 700 11.5px/1 var(--font-mono);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+
+    .eval-list {
+      list-style: none;
+      display: grid;
+      gap: 13px;
+      margin-top: 4px;
+    }
+
+    .eval-list li {
+      font-size: clamp(13.5px, 1.15vw, 15.5px);
+      line-height: 1.45;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .pill-note {
+      margin-top: auto;
+      background: var(--sand);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font: 400 12.5px/1.4 var(--font-mono);
+      color: var(--ink-2);
+    }
+
+    .inline-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .split-5 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-block: auto;
+    }
+
+    .subtle-kicker {
+      font: 700 12.5px/1.2 var(--font-body);
+      color: var(--navy);
+    }
+
+    .callout-amber {
+      background: var(--sand);
+      border-left: 3px solid var(--amber-fg);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 16px;
+      font: 400 clamp(12.5px, 1.05vw, 13.5px)/1.55 var(--font-mono);
+      color: var(--ink);
+      margin-top: 6px;
+    }
+
+    .guard-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .guard-list li {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: clamp(13.5px, 1.12vw, 15px);
+      line-height: 1.48;
+      color: var(--ink-2);
+    }
+
+    .thanks-title {
+      font: 700 clamp(36px, 4.4vw, 56px)/1.05 var(--font-display);
+      color: #ffffff;
+    }
+
+    .thanks-sub {
+      font-size: clamp(15px, 1.4vw, 19px);
+      line-height: 1.55;
+      color: #c2c8de;
+      max-width: 52ch;
+    }
+
+    .thanks-rule {
+      width: min(420px, 50%);
+      height: 1px;
+      background: rgba(255, 255, 255, 0.16);
+      margin-top: 26px;
+    }
+
+    /* Embedded PDF viewer panel */
+    .pdf-frame {
+      display: none;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #1b2242;
+    }
+
+    .slide-stage.pdf-mode .slide { display: none !important; }
+    .slide-stage.pdf-mode .pdf-frame { display: block; }
+
     .deck-foot {
       display: flex;
       align-items: center;
@@ -104,267 +464,248 @@
       gap: 12px;
       flex-wrap: wrap;
       padding-top: 8px;
+      border-top: 1px solid var(--shell-line);
     }
-    .dots { display: flex; gap: 6px; align-items: center; }
+
+    .dots { display: flex; gap: 7px; align-items: center; }
+
     .dot {
-      width: 22px;
+      width: 24px;
       height: 6px;
       border-radius: 999px;
       border: 0;
-      padding: 0;
-      background: var(--line);
+      background: #2c3663;
       cursor: pointer;
       transition: background 0.15s, width 0.15s;
     }
-    .dot.active { width: 36px; background: var(--sun); }
-    .kbd { font: 500 11px/1 var(--font-mono); padding: 4px 7px; border: 1px solid var(--line); border-radius: 4px; color: var(--fg-3); }
-    @media (max-width: 820px) {
-      .hero-cover, .slide-grid, .slide-grid-3 { grid-template-columns: 1fr; }
+
+    .dot.active { width: 38px; background: var(--amber); }
+
+    .kbd {
+      font: 500 11px/1 var(--font-mono);
+      padding: 4px 7px;
+      border: 1px solid var(--shell-line);
+      border-radius: 4px;
+      color: #9da6c7;
+    }
+
+    @media (max-width: 900px) {
+      .slide-stage { aspect-ratio: auto; min-height: 0; }
+      .slide { height: auto; min-height: 460px; gap: 22px; }
+      .cards-3, .cards-2x2, .split-4, .split-5, .cover-meta { grid-template-columns: 1fr; }
+      .stack-2 { grid-template-rows: auto; }
+      .cover-pill-ghost { display: none; }
     }
   </style>
 </head>
 <body>
   <div class="deck-shell">
     <header class="deck-top">
-      <div class="deck-brand">
-        <img src="assets/solari-x-icon.svg" width="32" height="32" alt="Solari-X icon">
-        <span>Solari-X · NASA Space Apps Deck</span>
-      </div>
+      <a class="deck-brand" href="index.html" title="Return to Mediterranean Sea Climate Observatory">
+        <img src="assets/solari-x-icon.svg" alt="Solari-X emblem">
+        <span>Mediterranean Sea Climate Observatory</span>
+      </a>
       <div class="deck-controls">
-        <span class="badge"><span id="slide-counter">1 / 8</span></span>
-        <button class="btn sm" id="btn-fs" type="button">Fullscreen</button>
-        <a class="btn sm primary" href="index.html">Open Live Observatory</a>
+        <span class="counter" id="slide-counter">1 / 6</span>
+        <button class="btn" id="btn-pdf" type="button" aria-pressed="false">View Original PDF</button>
+        <a class="btn" href="presentation.pdf" download>Download PDF</a>
+        <button class="btn" id="btn-fs" type="button">Fullscreen</button>
+        <a class="btn primary" href="index.html">Open Observatory</a>
       </div>
     </header>
 
-    <main class="slide-stage" style="padding-top:0">
-      <!-- Slide 1 -->
-      <section class="slide active" data-slide="1">
-        <div class="hero-cover">
+    <main class="stage-wrap">
+      <div class="slide-stage" id="slide-stage" aria-live="polite">
+        <!-- Slide 1: Cover -->
+        <section class="slide slide-dark active" data-slide="1">
+          <div class="cover-pill-ghost" aria-hidden="true"></div>
+          <div style="margin-block:auto">
+            <p class="eyebrow-amber">Challenge: Be An Earth System Trend Detective!</p>
+            <h1 class="cover-title">Mediterranean Sea Climate Observatory</h1>
+            <p class="cover-sub">Interactive multi-decadal Earth system trend detection and statistical validation across NASA, Copernicus, and KNMI datasets.</p>
+          </div>
+          <div class="cover-meta">
+            <div>
+              <span>Temporal Baseline</span>
+              <strong>1870 – 2025</strong>
+            </div>
+            <div>
+              <span>Core Mission</span>
+              <strong>UN SDG 14: Life Below Water</strong>
+            </div>
+            <div>
+              <span>Statistical Standard</span>
+              <strong>Autocorrelation-Robust In-Browser HAC</strong>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 2: Executive Summary -->
+        <section class="slide slide-light" data-slide="2">
           <div>
-            <p class="eyebrow">NASA Space Apps Challenge · Be An Earth System Trend Detective</p>
-            <h2>Mediterranean Sea Climate Observatory: <em>earthdetective.earth</em></h2>
-            <p class="slide-lead">An interactive, client-side statistical observatory turning 156 years of satellite and ocean records into a transparent trend-testing workbench.</p>
-            <div class="team-members" style="margin-top:20px">
-              <span class="member-pill">Ahmed Madeh</span>
-              <span class="member-pill">Amr Reffat</span>
-              <span class="member-pill">Maya Ahmed</span>
-              <span class="member-pill">Ahmed Aladdin</span>
+            <p class="eyebrow-dark">Executive Summary</p>
+            <h2 class="slide-title">Investigating Mediterranean Climate Signals</h2>
+          </div>
+          <div class="cards-3">
+            <article class="card-white">
+              <div class="icon-box icon-blue" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5l-3.5 3.5-2-2L19 3l2 2zm-6.4 6.4l-2-2 2.8-2.8 2 2-2.8 2.8zM5 21l-2-2 3.5-3.5 2 2L5 21zm7.7-4.7l-5-5 1.4-1.4 5 5-1.4 1.4zM9.6 7.4L7 4.8 4.8 7l2.6 2.6-1.4 1.4L2.4 7.4 7 2.8l3.6 3.6-1 1zm7 7l3.6 3.6-4.6 4.6-3.6-3.6 1.4-1.4 2.2 2.2 2.2-2.2-2.2-2.2 1-1z"/></svg>
+              </div>
+              <h3>9 Earth System Records</h3>
+              <p>Harmonizes SST, sea-level anomaly, OHC, salinity, chlorophyll-a, and coastal rain.</p>
+            </article>
+            <article class="card-white">
+              <div class="icon-box icon-amber" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm2 3v3h10V6H7zm0 5v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zm-8 4v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2z"/></svg>
+              </div>
+              <h3>Live Statistical Engine</h3>
+              <p>Client-side testing across parametric and non-parametric algorithms in real time.</p>
+            </article>
+            <article class="card-white">
+              <div class="icon-box icon-green" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1 14l-3.5-3.5 1.41-1.41L11 13.17l4.59-4.59L17 10l-6 6z"/></svg>
+              </div>
+              <h3>Scientific Guardrails</h3>
+              <p>Strict spatial and proxy guardrails distinguishing true signals from local noise.</p>
+            </article>
+          </div>
+          <div class="rule-bottom"></div>
+        </section>
+
+        <!-- Slide 3: Architecture & Features -->
+        <section class="slide slide-light" data-slide="3">
+          <div>
+            <p class="eyebrow-dark">Architecture &amp; Features</p>
+            <h2 class="slide-title">What It Does &amp; How It Works</h2>
+          </div>
+          <div style="display:grid; gap:14px; margin-block:auto">
+            <div class="cards-2x2">
+              <article class="card-white" style="padding:18px 22px; gap:8px">
+                <div class="num-head">
+                  <span class="num-badge">01</span>
+                  <h3>Normalized Overview</h3>
+                </div>
+                <p>Dimensionless z-score projections align physical units onto unified timelines.</p>
+              </article>
+              <article class="card-white" style="padding:18px 22px; gap:8px">
+                <div class="num-head">
+                  <span class="num-badge">02</span>
+                  <h3>Data Detective Workbench</h3>
+                </div>
+                <p>6-step workbench with dynamic time expansion showing sample-size power.</p>
+              </article>
+              <article class="card-white" style="padding:18px 22px; gap:8px">
+                <div class="num-head">
+                  <span class="num-badge">03</span>
+                  <h3>Coastal Rain Compare</h3>
+                </div>
+                <p>NASA GPM IMERG annual totals across Alexandria, Athens, and Barcelona.</p>
+              </article>
+              <article class="card-white" style="padding:18px 22px; gap:8px">
+                <div class="num-head">
+                  <span class="num-badge">04</span>
+                  <h3>Seasonality &amp; Blooms</h3>
+                </div>
+                <p>Winter phytoplankton bloom contrasts against summer stratification deserts.</p>
+              </article>
+            </div>
+            <div class="engine-banner">
+              <code>Core Engine: Browser-native Stats &amp; Adv JS modules executing live regressions</code>
+              <strong>Zero Server Roundtrips</strong>
             </div>
           </div>
-          <div class="cover-logo">
-            <img src="assets/solari-x-logo.jpg" alt="Team Solari-X Logo">
-          </div>
-        </div>
-        <div class="hero-meta-strip">
-          <span>Team Solari-X</span>
-          <span>9 Multi-Decadal Records (1870–2025)</span>
-          <span>NASA GPM IMERG · Copernicus Marine · KNMI</span>
-          <span>SDG 14: Life Below Water</span>
-        </div>
-      </section>
+          <div class="rule-bottom">SVG Regional Map: KNMI Bounding Box vs. Copernicus Sea Mask &amp; NASA 0.1° Cells</div>
+        </section>
 
-      <!-- Slide 2 -->
-      <section class="slide" data-slide="2">
-        <div>
-          <p class="eyebrow">01 · The Problem</p>
-          <h2>Why finding a real climate trend is <em>harder</em> than drawing a line</h2>
-          <p class="slide-lead">Standard dashboards drop a single straight line onto a noisy chart and call it a day. In Earth science, that routinely misleads students and coastal planners.</p>
-        </div>
-        <div class="slide-grid-3">
-          <div class="card-box">
-            <span class="eyebrow">Trap 1 · Short Windows</span>
-            <h4>Noise hides slow signals</h4>
-            <p>A 15-year slice of satellite sea temperature (1982–1998) looks statistically flat even inside a basin warming rapidly over 44 years.</p>
+        <!-- Slide 4: Methodology & Impact -->
+        <section class="slide slide-light" data-slide="4">
+          <div>
+            <p class="eyebrow-dark">Methodology &amp; Impact</p>
+            <h2 class="slide-title">Benefits &amp; Intended Impact</h2>
           </div>
-          <div class="card-box">
-            <span class="eyebrow">Trap 2 · Memory</span>
-            <h4>Autocorrelation fools OLS</h4>
-            <p>Warm ocean years tend to follow warm ocean years (lag-1 r₁ &gt; 0.5). Plain Student's t-tests treat every year as independent and overstate certainty.</p>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">Trap 3 · Opposing Regimes</span>
-            <h4>One driver, opposite slopes</h4>
-            <p>Across the Mediterranean, coastal rainfall trends upward at Alexandria (+44.7 mm/dec) while Athens and Barcelona slope downward — yet none pass robust multiple-testing checks.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 3 -->
-      <section class="slide" data-slide="3">
-        <div>
-          <p class="eyebrow">02 · Architecture & Data</p>
-          <h2>Nine curated records across <em>eight workspaces</em></h2>
-          <p class="slide-lead">Built as a fast, zero-build web application (HTML5, CSS3, Vanilla ES6 JS, Plotly.js v2.35.2). All regressions, distributions, and CSV exports run live in the browser.</p>
-        </div>
-        <div class="slide-grid">
-          <div class="card-box">
-            <span class="eyebrow">Data Sources</span>
-            <h4>Satellite & Reanalysis Records</h4>
-            <ul class="list" style="gap:8px">
-              <li><span><b>KNMI Climate Explorer:</b> NOAA OI v2 SST (1982–2025), HadISST1 (1870–2025), UKMO EN4 0–400 m Heat Content (1950–2025) & Salinity (1900–2025), Copernicus Altimetry SLA (1993–2021).</span></li>
-              <li><span><b>Copernicus Marine:</b> Area-weighted basin Chlorophyll-a (1998–2024, ≥10 valid months/yr).</span></li>
-              <li><span><b>NASA GPM IMERG v07:</b> Half-hourly rain rates summed to annual depth (2001–2024, ≥95% complete) at Alexandria, Athens, and Barcelona 0.1° land cells.</span></li>
-            </ul>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">User Experience</span>
-            <h4>8 Guided Workspaces</h4>
-            <ul class="list" style="gap:8px">
-              <li><span><b>Overview:</b> Standardized z-scores putting °C, mm, and mg m⁻³ on one timeline.</span></li>
-              <li><span><b>Data Detective:</b> 6-step workbench with dual year sliders & “Watch the trend appear” animation.</span></li>
-              <li><span><b>Rain Compare & Seasonality:</b> Cross-city regimes, winter bloom vs. summer desert, peak half-hour storms.</span></li>
-              <li><span><b>Variables, Map, Statistics & Guardrails:</b> Plain-language guide, SVG footprint map, full tables, and strict limits.</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 4 -->
-      <section class="slide" data-slide="4">
-        <div>
-          <p class="eyebrow">03 · Statistical Engine</p>
-          <h2>Every window cross-examined by <em>four tests</em></h2>
-          <p class="slide-lead">Inside <code>js/stats.js</code>, our <code>Stats</code> and <code>Adv</code> modules compute exact distributions from scratch — no server, no approximations on small samples.</p>
-        </div>
-        <div class="slide-grid">
-          <div class="card-box">
-            <span class="eyebrow">The 4-Test Evidence Score</span>
-            <h4>Parametric + Non-Parametric Cross-Check</h4>
-            <ul class="list" style="gap:8px">
-              <li><span><b>1. OLS Student's t-test:</b> Baseline linear slope with exact regularized incomplete beta <code>ibeta</code> p-values.</span></li>
-              <li><span><b>2. Newey–West (HAC) Regression:</b> Bartlett-kernel standard errors robust to year-to-year autocorrelation.</span></li>
-              <li><span><b>3. Mann–Kendall + Theil–Sen:</b> Rank-based test and median pairwise slope immune to single storm outliers.</span></li>
-              <li><span><b>4. Hamed–Rao Variance Correction:</b> Adjusts Mann–Kendall variance for serial correlation in detrended residuals.</span></li>
-            </ul>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">Structural Diagnostics</span>
-            <h4>Does the Straight-Line Story Hold?</h4>
-            <ul class="list" style="gap:8px">
-              <li><span><b>Pettitt Change-Point:</b> Detects the most likely year of an abrupt level jump.</span></li>
-              <li><span><b>Continuous Hinge Fit:</b> Two-segment regression with F-test vs. a single line.</span></li>
-              <li><span><b>Quadratic Curvature:</b> Tests whether warming or drying is accelerating over time.</span></li>
-              <li><span><b>Rolling Windows & BH q-values:</b> 10/15/20-year slope stability plus Benjamini–Hochberg false-discovery control.</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 5 -->
-      <section class="slide" data-slide="5">
-        <div>
-          <p class="eyebrow">04 · Key Finding I</p>
-          <h2>Accelerating warming &amp; steady <em>sea-level rise</em></h2>
-          <p class="slide-lead">All four statistical tests agree across satellite SST, century-scale SST, upper-ocean heat content, and satellite altimetry.</p>
-        </div>
-        <div class="slide-grid-3">
-          <div class="card-box">
-            <span class="eyebrow">NOAA OI v2 · 1982–2025</span>
-            <div class="stat-big num">+0.376 °C</div>
-            <h4>per decade (p &lt; 10⁻¹⁵)</h4>
-            <p>Roughly <b>6× faster</b> than the 1870–2025 background warming rate in HadISST1 (+0.064 °C/decade). MK τ = +0.77.</p>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">UKMO EN4 · 1950–2025</span>
-            <div class="stat-big num">+0.234 × 10⁹</div>
-            <h4>J/m² per decade (p = 0.000039)</h4>
-            <p>Heat stored in the top 400 m is rising steadily, confirming heat uptake well below the surface.</p>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">Copernicus SLA · 1993–2021</span>
-            <div class="stat-big num">+25.18 mm</div>
-            <h4>per decade (p &lt; 10⁻¹⁵)</h4>
-            <p>95% HAC CI: 19.61 to 30.74 mm/decade. Driven by thermal expansion and added water mass.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 6 -->
-      <section class="slide" data-slide="6">
-        <div>
-          <p class="eyebrow">05 · Key Finding II · SDG 14</p>
-          <h2>Primary productivity is <em>declining</em></h2>
-          <p class="slide-lead">Warmer surface waters strengthen vertical stratification, blocking deep-water nutrients from reaching sunlit surface layers.</p>
-        </div>
-        <div class="slide-grid">
-          <div class="card-box">
-            <span class="eyebrow">Copernicus Ocean Color · 1998–2024</span>
-            <div class="stat-big num">−0.0039 mg m⁻³</div>
-            <h4>per decade · All tests agree</h4>
-            <p>Newey–West HAC p = 0.00054; Mann–Kendall τ = −0.41 (p = 0.0031); BH q = 0.0011. Theil–Sen agrees at −0.0039 mg m⁻³/decade.</p>
-          </div>
-          <div class="card-box">
-            <span class="eyebrow">Seasonal Contrast</span>
-            <h4>Winter Bloom vs. Summer Desert</h4>
-            <p>Deep winter mixing lifts nutrients and drives the basin's chlorophyll peak in <b>February (0.122 mg m⁻³)</b>. Strong summer heating stratifies the water column, dropping chlorophyll to <b>0.043 mg m⁻³ in August</b>.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 7 -->
-      <section class="slide" data-slide="7">
-        <div>
-          <p class="eyebrow">06 · Key Finding III · Rain Compare</p>
-          <h2>Opposing coastal rain slopes — and why <em>false-discovery control</em> matters</h2>
-          <p class="slide-lead">Alexandria (31.25°N, 29.95°E), Athens (38.05°N, 23.65°E), and Barcelona (41.45°N, 2.15°E) show uncorrelated annual totals and opposite signs.</p>
-        </div>
-        <div class="slide-grid-3">
-          <div class="card-box" style="border-top: 3px solid var(--s-rain)">
-            <span class="eyebrow">Alexandria · Mixed Evidence</span>
-            <div class="stat-big num">+44.7 mm</div>
-            <h4>per decade (2001–2024)</h4>
-            <p>Driven by extreme storm years (2015: 309 mm, 2020: 406 mm). Passes standalone HAC (p = 0.037), <b>fails Mann–Kendall (p = 0.107)</b> and <b>fails 3-point BH FDR (q = 0.111)</b>.</p>
-          </div>
-          <div class="card-box" style="border-top: 3px solid var(--s-ath)">
-            <span class="eyebrow">Athens · Not Significant</span>
-            <div class="stat-big num">−38.3 mm</div>
-            <h4>per decade (2001–2024)</h4>
-            <p>Downward slope across 24 years, but wide uncertainty (HAC p = 0.267, MK p = 0.264, BH q = 0.401). Peak half-hour rate: 28.6 mm/h (2019).</p>
-          </div>
-          <div class="card-box" style="border-top: 3px solid var(--s-bcn)">
-            <span class="eyebrow">Barcelona · Not Significant</span>
-            <div class="stat-big num">−41.5 mm</div>
-            <h4>per decade (2001–2024)</h4>
-            <p>Autumn-peaking regime (86 mm mean in Oct; 34.3 mm/h storm in 2019). Slope stays inside noise (HAC p = 0.445, MK p = 0.309, BH q = 0.445).</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Slide 8 -->
-      <section class="slide" data-slide="8">
-        <div>
-          <p class="eyebrow">07 · Guardrails &amp; Live Demo</p>
-          <h2>Teaching <em>scientific literacy</em> alongside trend detection</h2>
-          <p class="slide-lead">A good Earth science tool tells you not only what the numbers say, but what you are not allowed to claim from them.</p>
-        </div>
-        <div class="slide-grid">
-          <div class="card-box">
-            <span class="eyebrow">Built-in Guardrails</span>
-            <ul class="list" style="gap:8px">
-              <li><span><b>Spatial mismatch:</b> A 0.1° land rain cell (~10 km) cannot be blamed for basin-wide chlorophyll decline without watershed modeling.</span></li>
-              <li><span><b>Boxes vs. sea masks:</b> KNMI bounding boxes clip neighboring waters; Copernicus uses strict Mediterranean sea masks.</span></li>
-              <li><span><b>Optical proxy:</b> Satellite chlorophyll-a estimates surface pigment, not fish stock counts or biodiversity.</span></li>
-            </ul>
-          </div>
-          <div class="card-box" style="justify-content:center; align-items:start; gap:14px">
-            <span class="eyebrow">Interactive Demonstration</span>
-            <h4>Watch the Trend Appear</h4>
-            <p>Open Data Detective, select <b>Sea surface temperature</b>, and click <b>“Watch the trend appear”</b> to watch the 1982–1998 flat line transform into a p &lt; 10⁻¹⁵ signal as years accumulate.</p>
-            <div class="row-btns">
-              <a class="btn primary" href="index.html#detective">Launch Data Detective</a>
-              <a class="btn" href="index.html#rain">Compare Rain Stations</a>
+          <div class="split-4">
+            <article class="card-white">
+              <span class="card-kicker">Beyond Naive OLS</span>
+              <h3 style="font-size:clamp(19px, 1.75vw, 23px)">Concurrent 4-Test Evaluation</h3>
+              <ul class="eval-list">
+                <li>OLS Regression: Establishes standard linear baseline slope.</li>
+                <li>Newey–West (HAC): Corrects for autocorrelation and persistence.</li>
+                <li>Theil–Sen Estimator: Median slope resisting outlier storms.</li>
+                <li>Hamed–Rao Test: Variance-corrected non-parametric trend test.</li>
+              </ul>
+              <div class="pill-note">+ Pettitt change-points, hinge regression, and sliding windows</div>
+            </article>
+            <div class="stack-2">
+              <article class="card-white" style="justify-content:center">
+                <div class="inline-head">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2b73cf" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M2 7c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/><path d="M2 12c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/><path d="M2 17c2 0 2 2 4 2s2-2 4-2 2 2 4 2 2-2 4-2 2 2 4 2"/></svg>
+                  <h3>SDG 14: Life Below Water</h3>
+                </div>
+                <p>Supplies defensible marine monitoring metrics for coastal decision-makers.</p>
+              </article>
+              <article class="card-white" style="justify-content:center">
+                <div class="inline-head">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#1d9a6c" aria-hidden="true"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-6.82 9.48L3 11.29V15.5C3 17.99 7.03 20 12 20s9-2.01 9-4.5v-4.21l-9 4.91-6.82-3.72z"/></svg>
+                  <h3>Scientific Literacy</h3>
+                </div>
+                <p>Demonstrates how cherry-picked dates generate spurious climate conclusions.</p>
+              </article>
             </div>
           </div>
-        </div>
-      </section>
+          <div class="rule-bottom"></div>
+        </section>
+
+        <!-- Slide 5: Pedagogy & Guardrails -->
+        <section class="slide slide-light" data-slide="5">
+          <div>
+            <p class="eyebrow-dark">Pedagogy &amp; Guardrails</p>
+            <h2 class="slide-title">Creativity &amp; Factors Considered</h2>
+          </div>
+          <div class="split-5">
+            <article class="card-white">
+              <span class="subtle-kicker">Interactive Experience</span>
+              <h3 style="font-size:clamp(20px, 1.9vw, 26px)">"Watch the Trend Appear"</h3>
+              <p>Dynamic simulation expanding windows year-by-year across historical series.</p>
+              <div class="callout-amber">SST 1982–1998 appears statistically flat before emerging as an undeniable warming signal over longer spans.</div>
+            </article>
+            <article class="card-white">
+              <span class="subtle-kicker">Methodological Integrity</span>
+              <h3 style="font-size:clamp(20px, 1.9vw, 26px)">Scientific Guardrails Module</h3>
+              <ul class="guard-list">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#d98a18" aria-hidden="true"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+                  <span>0.1° coastal cells cannot explain open-sea chlorophyll without watershed models.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2b73cf" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+                  <span>KNMI bounding box includes marginal seas unlike strict Copernicus masks.</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#1d9a6c" aria-hidden="true"><path d="M12 5C6.5 5 2 9.5 1 12c1 2.5 5.5 7 11 7s10-4.5 11-7c-1-2.5-5.5-7-11-7zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 .001 4.001A2 2 0 0 0 12 10z"/></svg>
+                  <span>Surface chlorophyll is an optical pigment proxy, not a direct fish census.</span>
+                </li>
+              </ul>
+            </article>
+          </div>
+          <div class="rule-bottom"></div>
+        </section>
+
+        <!-- Slide 6: Thank You -->
+        <section class="slide slide-dark-center" data-slide="6">
+          <h2 class="thanks-title">Thank You</h2>
+          <p class="thanks-sub">Empowering researchers, educators, and coastal planners to detect true climate signals from noise.</p>
+          <div class="thanks-rule" aria-hidden="true"></div>
+        </section>
+
+        <iframe class="pdf-frame" id="pdf-frame" src="presentation.pdf" title="Mediterranean Sea Climate Observatory PDF Presentation"></iframe>
+      </div>
     </main>
 
-    <footer class="deck-foot" style="margin-top:0; border-top:1px solid var(--line); padding-top:12px">
-      <div class="row-btns">
-        <button class="btn sm" id="btn-prev" type="button">← Previous</button>
-        <button class="btn sm primary" id="btn-next" type="button">Next →</button>
-        <span class="muted" style="align-self:center; font-size:12px">Keys: <span class="kbd">←</span> <span class="kbd">→</span> or <span class="kbd">Space</span></span>
+    <footer class="deck-foot">
+      <div class="deck-controls">
+        <button class="btn" id="btn-prev" type="button">← Previous</button>
+        <button class="btn primary" id="btn-next" type="button">Next →</button>
+        <span style="font-size:12px; color:#9da6c7">Keys: <span class="kbd">←</span> <span class="kbd">→</span> or <span class="kbd">Space</span></span>
       </div>
       <div class="dots" id="deck-dots" aria-label="Slide pagination"></div>
     </footer>
@@ -372,21 +713,34 @@
 
   <script>
     (function () {
+      var stage = document.getElementById("slide-stage");
       var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
       var dotsEl = document.getElementById("deck-dots");
       var counterEl = document.getElementById("slide-counter");
+      var btnPdf = document.getElementById("btn-pdf");
       var idx = 0;
 
       dotsEl.innerHTML = slides.map(function (_, i) {
         return '<button class="dot' + (i === 0 ? " active" : "") + '" data-i="' + i + '" aria-label="Go to slide ' + (i + 1) + '"></button>';
       }).join("");
 
+      function setPdfMode(on) {
+        stage.classList.toggle("pdf-mode", on);
+        btnPdf.setAttribute("aria-pressed", on ? "true" : "false");
+        btnPdf.textContent = on ? "Back to Slides" : "View Original PDF";
+      }
+
       function show(n) {
+        setPdfMode(false);
         idx = Math.max(0, Math.min(slides.length - 1, n));
         slides.forEach(function (s, i) { s.classList.toggle("active", i === idx); });
         Array.prototype.forEach.call(dotsEl.children, function (d, i) { d.classList.toggle("active", i === idx); });
         counterEl.textContent = (idx + 1) + " / " + slides.length;
       }
+
+      btnPdf.addEventListener("click", function () {
+        setPdfMode(!stage.classList.contains("pdf-mode"));
+      });
 
       document.getElementById("btn-prev").addEventListener("click", function () { show(idx - 1); });
       document.getElementById("btn-next").addEventListener("click", function () { show(idx + 1); });
@@ -394,13 +748,15 @@
         var b = e.target.closest("[data-i]");
         if (b) show(+b.getAttribute("data-i"));
       });
+
       document.getElementById("btn-fs").addEventListener("click", function () {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+          stage.requestFullscreen && stage.requestFullscreen();
         } else {
           document.exitFullscreen && document.exitFullscreen();
         }
       });
+
       document.addEventListener("keydown", function (e) {
         if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
           e.preventDefault();
