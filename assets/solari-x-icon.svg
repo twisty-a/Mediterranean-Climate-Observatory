@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Solari-X emblem">
+  <defs>
+    <linearGradient id="sxGrad" x1="15%" y1="30%" x2="85%" y2="70%">
+      <stop offset="0%" stop-color="#2b86d9"/>
+      <stop offset="52%" stop-color="#3ec6b8"/>
+      <stop offset="100%" stop-color="#64ce99"/>
+    </linearGradient>
+    <clipPath id="sxCircle">
+      <circle cx="60" cy="60" r="52"/>
+    </clipPath>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="#071124" stroke="#213c6b" stroke-width="2"/>
+  <g clip-path="url(#sxCircle)" fill="url(#sxGrad)">
+    <!-- Top chevron wedge -->
+    <path d="M27,13 L93,13 L60,46 Z"/>
+    <!-- Bottom chevron wedge -->
+    <path d="M27,107 L93,107 L60,74 Z"/>
+    <!-- Left chevron wedge -->
+    <path d="M13,27 L46,60 L13,93 Z"/>
+    <!-- Right chevron wedge -->
+    <path d="M107,27 L74,60 L107,93 Z"/>
+    <!-- Central Solari-X cross bars -->
+    <path d="M14,21 L21,14 L60,53 L99,14 L106,21 L67,60 L106,99 L99,106 L60,67 L21,106 L14,99 L53,60 Z"/>
+  </g>
+</svg>
