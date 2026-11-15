@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Presentation Deck — Solari-X | Mediterranean Sea Climate Observatory</title>
+  <link rel="icon" href="assets/solari-x-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { padding-block: 0; overflow-x: hidden; }
+    .deck-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-block: 14px 20px;
+      gap: 16px;
+    }
+    .deck-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+    .deck-brand { display: flex; align-items: center; gap: 10px; }
+    .deck-brand span { font: 600 14px/1 var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg); }
+    .deck-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .slide-stage {
+      display: grid;
+      align-items: stretch;
+    }
+    .slide {
+      display: none;
+      background:
+        radial-gradient(560px 360px at 92% -10%, var(--glow), transparent 70%),
+        linear-gradient(180deg, var(--panel-2), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: clamp(24px, 4vw, 48px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: var(--brand-grad);
+    }
+    .slide.active { display: flex; }
+    .slide h2 { font-size: clamp(28px, 4vw, 44px); line-height: 1.06; margin-top: 8px; }
+    .slide h2 em {
+      font-style: normal;
+      background: var(--brand-grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .slide-lead { font-size: 16px; color: var(--fg-2); max-width: 68ch; margin-top: 10px; }
+    .slide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .slide-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card-box {
+      background: color-mix(in srgb, var(--bg) 55%, transparent);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 18px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+    .card-box h4 { font-size: 18px; color: var(--fg); }
+    .card-box p { font-size: 13.5px; color: var(--fg-2); }
+    .stat-big { font: 700 clamp(26px, 3vw, 36px)/1 var(--font-display); color: var(--sun); }
+    .hero-cover {
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .cover-logo {
+      display: grid;
+      place-items: center;
+      background: #0b1936;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .cover-logo img { max-width: 260px; border-radius: 6px; }
+    .deck-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+    }
+    .dots { display: flex; gap: 6px; align-items: center; }
+    .dot {
+      width: 22px;
+      height: 6px;
+      border-radius: 999px;
+      border: 0;
+      padding: 0;
+      background: var(--line);
+      cursor: pointer;
+      transition: background 0.15s, width 0.15s;
+    }
+    .dot.active { width: 36px; background: var(--sun); }
+    .kbd { font: 500 11px/1 var(--font-mono); padding: 4px 7px; border: 1px solid var(--line); border-radius: 4px; color: var(--fg-3); }
+    @media (max-width: 820px) {
+      .hero-cover, .slide-grid, .slide-grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-shell">
+    <header class="deck-top">
+      <div class="deck-brand">
+        <img src="assets/solari-x-icon.svg" width="32" height="32" alt="Solari-X icon">
+        <span>Solari-X · NASA Space Apps Deck</span>
+      </div>
+      <div class="deck-controls">
+        <span class="badge"><span id="slide-counter">1 / 8</span></span>
+        <button class="btn sm" id="btn-fs" type="button">Fullscreen</button>
+        <a class="btn sm primary" href="index.html">Open Live Observatory</a>
+      </div>
+    </header>
+
+    <main class="slide-stage" style="padding-top:0">
+      <!-- Slide 1 -->
+      <section class="slide active" data-slide="1">
+        <div class="hero-cover">
+          <div>
+            <p class="eyebrow">NASA Space Apps Challenge · Be An Earth System Trend Detective</p>
+            <h2>Mediterranean Sea Climate Observatory: <em>earthdetective.earth</em></h2>
+            <p class="slide-lead">An interactive, client-side statistical observatory turning 156 years of satellite and ocean records into a transparent trend-testing workbench.</p>
+            <div class="team-members" style="margin-top:20px">
+              <span class="member-pill">Ahmed Madeh</span>
+              <span class="member-pill">Amr Reffat</span>
+              <span class="member-pill">Maya Ahmed</span>
+              <span class="member-pill">Ahmed Aladdin</span>
+            </div>
+          </div>
+          <div class="cover-logo">
+            <img src="assets/solari-x-logo.jpg" alt="Team Solari-X Logo">
+          </div>
+        </div>
+        <div class="hero-meta-strip">
+          <span>Team Solari-X</span>
+          <span>9 Multi-Decadal Records (1870–2025)</span>
+          <span>NASA GPM IMERG · Copernicus Marine · KNMI</span>
+          <span>SDG 14: Life Below Water</span>
+        </div>
+      </section>
+
+      <!-- Slide 2 -->
+      <section class="slide" data-slide="2">
+        <div>
+          <p class="eyebrow">01 · The Problem</p>
+          <h2>Why finding a real climate trend is <em>harder</em> than drawing a line</h2>
+          <p class="slide-lead">Standard dashboards drop a single straight line onto a noisy chart and call it a day. In Earth science, that routinely misleads students and coastal planners.</p>
+        </div>
+        <div class="slide-grid-3">
+          <div class="card-box">
+            <span class="eyebrow">Trap 1 · Short Windows</span>
+            <h4>Noise hides slow signals</h4>
+            <p>A 15-year slice of satellite sea temperature (1982–1998) looks statistically flat even inside a basin warming rapidly over 44 years.</p>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">Trap 2 · Memory</span>
+            <h4>Autocorrelation fools OLS</h4>
+            <p>Warm ocean years tend to follow warm ocean years (lag-1 r₁ &gt; 0.5). Plain Student's t-tests treat every year as independent and overstate certainty.</p>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">Trap 3 · Opposing Regimes</span>
+            <h4>One driver, opposite slopes</h4>
+            <p>Across the Mediterranean, coastal rainfall trends upward at Alexandria (+44.7 mm/dec) while Athens and Barcelona slope downward — yet none pass robust multiple-testing checks.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3 -->
+      <section class="slide" data-slide="3">
+        <div>
+          <p class="eyebrow">02 · Architecture & Data</p>
+          <h2>Nine curated records across <em>eight workspaces</em></h2>
+          <p class="slide-lead">Built as a fast, zero-build web application (HTML5, CSS3, Vanilla ES6 JS, Plotly.js v2.35.2). All regressions, distributions, and CSV exports run live in the browser.</p>
+        </div>
+        <div class="slide-grid">
+          <div class="card-box">
+            <span class="eyebrow">Data Sources</span>
+            <h4>Satellite & Reanalysis Records</h4>
+            <ul class="list" style="gap:8px">
+              <li><span><b>KNMI Climate Explorer:</b> NOAA OI v2 SST (1982–2025), HadISST1 (1870–2025), UKMO EN4 0–400 m Heat Content (1950–2025) & Salinity (1900–2025), Copernicus Altimetry SLA (1993–2021).</span></li>
+              <li><span><b>Copernicus Marine:</b> Area-weighted basin Chlorophyll-a (1998–2024, ≥10 valid months/yr).</span></li>
+              <li><span><b>NASA GPM IMERG v07:</b> Half-hourly rain rates summed to annual depth (2001–2024, ≥95% complete) at Alexandria, Athens, and Barcelona 0.1° land cells.</span></li>
+            </ul>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">User Experience</span>
+            <h4>8 Guided Workspaces</h4>
+            <ul class="list" style="gap:8px">
+              <li><span><b>Overview:</b> Standardized z-scores putting °C, mm, and mg m⁻³ on one timeline.</span></li>
+              <li><span><b>Data Detective:</b> 6-step workbench with dual year sliders & “Watch the trend appear” animation.</span></li>
+              <li><span><b>Rain Compare & Seasonality:</b> Cross-city regimes, winter bloom vs. summer desert, peak half-hour storms.</span></li>
+              <li><span><b>Variables, Map, Statistics & Guardrails:</b> Plain-language guide, SVG footprint map, full tables, and strict limits.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4 -->
+      <section class="slide" data-slide="4">
+        <div>
+          <p class="eyebrow">03 · Statistical Engine</p>
+          <h2>Every window cross-examined by <em>four tests</em></h2>
+          <p class="slide-lead">Inside <code>js/stats.js</code>, our <code>Stats</code> and <code>Adv</code> modules compute exact distributions from scratch — no server, no approximations on small samples.</p>
+        </div>
+        <div class="slide-grid">
+          <div class="card-box">
+            <span class="eyebrow">The 4-Test Evidence Score</span>
+            <h4>Parametric + Non-Parametric Cross-Check</h4>
+            <ul class="list" style="gap:8px">
+              <li><span><b>1. OLS Student's t-test:</b> Baseline linear slope with exact regularized incomplete beta <code>ibeta</code> p-values.</span></li>
+              <li><span><b>2. Newey–West (HAC) Regression:</b> Bartlett-kernel standard errors robust to year-to-year autocorrelation.</span></li>
+              <li><span><b>3. Mann–Kendall + Theil–Sen:</b> Rank-based test and median pairwise slope immune to single storm outliers.</span></li>
+              <li><span><b>4. Hamed–Rao Variance Correction:</b> Adjusts Mann–Kendall variance for serial correlation in detrended residuals.</span></li>
+            </ul>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">Structural Diagnostics</span>
+            <h4>Does the Straight-Line Story Hold?</h4>
+            <ul class="list" style="gap:8px">
+              <li><span><b>Pettitt Change-Point:</b> Detects the most likely year of an abrupt level jump.</span></li>
+              <li><span><b>Continuous Hinge Fit:</b> Two-segment regression with F-test vs. a single line.</span></li>
+              <li><span><b>Quadratic Curvature:</b> Tests whether warming or drying is accelerating over time.</span></li>
+              <li><span><b>Rolling Windows & BH q-values:</b> 10/15/20-year slope stability plus Benjamini–Hochberg false-discovery control.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5 -->
+      <section class="slide" data-slide="5">
+        <div>
+          <p class="eyebrow">04 · Key Finding I</p>
+          <h2>Accelerating warming &amp; steady <em>sea-level rise</em></h2>
+          <p class="slide-lead">All four statistical tests agree across satellite SST, century-scale SST, upper-ocean heat content, and satellite altimetry.</p>
+        </div>
+        <div class="slide-grid-3">
+          <div class="card-box">
+            <span class="eyebrow">NOAA OI v2 · 1982–2025</span>
+            <div class="stat-big num">+0.376 °C</div>
+            <h4>per decade (p &lt; 10⁻¹⁵)</h4>
+            <p>Roughly <b>6× faster</b> than the 1870–2025 background warming rate in HadISST1 (+0.064 °C/decade). MK τ = +0.77.</p>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">UKMO EN4 · 1950–2025</span>
+            <div class="stat-big num">+0.234 × 10⁹</div>
+            <h4>J/m² per decade (p = 0.000039)</h4>
+            <p>Heat stored in the top 400 m is rising steadily, confirming heat uptake well below the surface.</p>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">Copernicus SLA · 1993–2021</span>
+            <div class="stat-big num">+25.18 mm</div>
+            <h4>per decade (p &lt; 10⁻¹⁵)</h4>
+            <p>95% HAC CI: 19.61 to 30.74 mm/decade. Driven by thermal expansion and added water mass.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6 -->
+      <section class="slide" data-slide="6">
+        <div>
+          <p class="eyebrow">05 · Key Finding II · SDG 14</p>
+          <h2>Primary productivity is <em>declining</em></h2>
+          <p class="slide-lead">Warmer surface waters strengthen vertical stratification, blocking deep-water nutrients from reaching sunlit surface layers.</p>
+        </div>
+        <div class="slide-grid">
+          <div class="card-box">
+            <span class="eyebrow">Copernicus Ocean Color · 1998–2024</span>
+            <div class="stat-big num">−0.0039 mg m⁻³</div>
+            <h4>per decade · All tests agree</h4>
+            <p>Newey–West HAC p = 0.00054; Mann–Kendall τ = −0.41 (p = 0.0031); BH q = 0.0011. Theil–Sen agrees at −0.0039 mg m⁻³/decade.</p>
+          </div>
+          <div class="card-box">
+            <span class="eyebrow">Seasonal Contrast</span>
+            <h4>Winter Bloom vs. Summer Desert</h4>
+            <p>Deep winter mixing lifts nutrients and drives the basin's chlorophyll peak in <b>February (0.122 mg m⁻³)</b>. Strong summer heating stratifies the water column, dropping chlorophyll to <b>0.043 mg m⁻³ in August</b>.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7 -->
+      <section class="slide" data-slide="7">
+        <div>
+          <p class="eyebrow">06 · Key Finding III · Rain Compare</p>
+          <h2>Opposing coastal rain slopes — and why <em>false-discovery control</em> matters</h2>
+          <p class="slide-lead">Alexandria (31.25°N, 29.95°E), Athens (38.05°N, 23.65°E), and Barcelona (41.45°N, 2.15°E) show uncorrelated annual totals and opposite signs.</p>
+        </div>
+        <div class="slide-grid-3">
+          <div class="card-box" style="border-top: 3px solid var(--s-rain)">
+            <span class="eyebrow">Alexandria · Mixed Evidence</span>
+            <div class="stat-big num">+44.7 mm</div>
+            <h4>per decade (2001–2024)</h4>
+            <p>Driven by extreme storm years (2015: 309 mm, 2020: 406 mm). Passes standalone HAC (p = 0.037), <b>fails Mann–Kendall (p = 0.107)</b> and <b>fails 3-point BH FDR (q = 0.111)</b>.</p>
+          </div>
+          <div class="card-box" style="border-top: 3px solid var(--s-ath)">
+            <span class="eyebrow">Athens · Not Significant</span>
+            <div class="stat-big num">−38.3 mm</div>
+            <h4>per decade (2001–2024)</h4>
+            <p>Downward slope across 24 years, but wide uncertainty (HAC p = 0.267, MK p = 0.264, BH q = 0.401). Peak half-hour rate: 28.6 mm/h (2019).</p>
+          </div>
+          <div class="card-box" style="border-top: 3px solid var(--s-bcn)">
+            <span class="eyebrow">Barcelona · Not Significant</span>
+            <div class="stat-big num">−41.5 mm</div>
+            <h4>per decade (2001–2024)</h4>
+            <p>Autumn-peaking regime (86 mm mean in Oct; 34.3 mm/h storm in 2019). Slope stays inside noise (HAC p = 0.445, MK p = 0.309, BH q = 0.445).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8 -->
+      <section class="slide" data-slide="8">
+        <div>
+          <p class="eyebrow">07 · Guardrails &amp; Live Demo</p>
+          <h2>Teaching <em>scientific literacy</em> alongside trend detection</h2>
+          <p class="slide-lead">A good Earth science tool tells you not only what the numbers say, but what you are not allowed to claim from them.</p>
+        </div>
+        <div class="slide-grid">
+          <div class="card-box">
+            <span class="eyebrow">Built-in Guardrails</span>
+            <ul class="list" style="gap:8px">
+              <li><span><b>Spatial mismatch:</b> A 0.1° land rain cell (~10 km) cannot be blamed for basin-wide chlorophyll decline without watershed modeling.</span></li>
+              <li><span><b>Boxes vs. sea masks:</b> KNMI bounding boxes clip neighboring waters; Copernicus uses strict Mediterranean sea masks.</span></li>
+              <li><span><b>Optical proxy:</b> Satellite chlorophyll-a estimates surface pigment, not fish stock counts or biodiversity.</span></li>
+            </ul>
+          </div>
+          <div class="card-box" style="justify-content:center; align-items:start; gap:14px">
+            <span class="eyebrow">Interactive Demonstration</span>
+            <h4>Watch the Trend Appear</h4>
+            <p>Open Data Detective, select <b>Sea surface temperature</b>, and click <b>“Watch the trend appear”</b> to watch the 1982–1998 flat line transform into a p &lt; 10⁻¹⁵ signal as years accumulate.</p>
+            <div class="row-btns">
+              <a class="btn primary" href="index.html#detective">Launch Data Detective</a>
+              <a class="btn" href="index.html#rain">Compare Rain Stations</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="deck-foot" style="margin-top:0; border-top:1px solid var(--line); padding-top:12px">
+      <div class="row-btns">
+        <button class="btn sm" id="btn-prev" type="button">← Previous</button>
+        <button class="btn sm primary" id="btn-next" type="button">Next →</button>
+        <span class="muted" style="align-self:center; font-size:12px">Keys: <span class="kbd">←</span> <span class="kbd">→</span> or <span class="kbd">Space</span></span>
+      </div>
+      <div class="dots" id="deck-dots" aria-label="Slide pagination"></div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+      var dotsEl = document.getElementById("deck-dots");
+      var counterEl = document.getElementById("slide-counter");
+      var idx = 0;
+
+      dotsEl.innerHTML = slides.map(function (_, i) {
+        return '<button class="dot' + (i === 0 ? " active" : "") + '" data-i="' + i + '" aria-label="Go to slide ' + (i + 1) + '"></button>';
+      }).join("");
+
+      function show(n) {
+        idx = Math.max(0, Math.min(slides.length - 1, n));
+        slides.forEach(function (s, i) { s.classList.toggle("active", i === idx); });
+        Array.prototype.forEach.call(dotsEl.children, function (d, i) { d.classList.toggle("active", i === idx); });
+        counterEl.textContent = (idx + 1) + " / " + slides.length;
+      }
+
+      document.getElementById("btn-prev").addEventListener("click", function () { show(idx - 1); });
+      document.getElementById("btn-next").addEventListener("click", function () { show(idx + 1); });
+      dotsEl.addEventListener("click", function (e) {
+        var b = e.target.closest("[data-i]");
+        if (b) show(+b.getAttribute("data-i"));
+      });
+      document.getElementById("btn-fs").addEventListener("click", function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+        } else {
+          document.exitFullscreen && document.exitFullscreen();
+        }
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          show(idx + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          show(idx - 1);
+        } else if (e.key === "Home") {
+          show(0);
+        } else if (e.key === "End") {
+          show(slides.length - 1);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
