@@ -1,0 +1,13 @@
+# Ignore local walkthrough notebooks and checkpoints
+*.ipynb
+.ipynb_checkpoints/
+
+# Ignore original single-file backup if present
+Mediterranean Sea Climate Observatory (2).html
+
+# OS & Editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
