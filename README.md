@@ -4,7 +4,8 @@
 
 # Mediterranean Sea Climate Observatory
 
-**Live domain:** `earthdetective.earth`  
+**Live Demo:** [https://twisty-a.github.io/mediterranean-climate-observatory/](https://twisty-a.github.io/mediterranean-climate-observatory/)  
+**Presentation Deck:** [https://twisty-a.github.io/mediterranean-climate-observatory/presentation.html](https://twisty-a.github.io/mediterranean-climate-observatory/presentation.html)  
 **Challenge:** NASA Space Apps — *Be An Earth System Trend Detective*  
 **Team Solari-X:** Ahmed Madeh, Amr Reffat, Maya Ahmed, and Ahmed Aladdin
 
@@ -70,7 +71,6 @@ Every time you move a slider in **Data Detective**, the browser runs two self-co
 ├── index.html               # Main 8-workspace observatory application
 ├── presentation.html        # Interactive 6-slide presentation synced with presentation.pdf + PDF viewer
 ├── presentation.pdf         # Original 6-slide team PDF presentation (as-is)
-├── CNAME                    # Custom domain config (earthdetective.earth)
 ├── LICENSE                  # MIT License
 ├── README.md                # Project documentation
 ├── .gitignore               # Excludes local notebooks & temp files
@@ -100,7 +100,7 @@ Because the dataset is bundled in `js/data.js` and all statistical routines exec
   python -m http.server 8000
   # or using VS Code Live Server / any static host
   ```
-- **Deployment:** Ready for GitHub Pages out of the box from the `main` branch root (`/`), with `CNAME` configured for `earthdetective.earth`.
+- **Deployment:** Live on GitHub Pages from the `main` branch root (`/`) at `https://twisty-a.github.io/mediterranean-climate-observatory/`.
 
 ---
 
